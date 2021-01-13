@@ -224,6 +224,7 @@ public class DefaultChannelPipeline implements ChannelPipeline {
         return this;
     }
 
+    //注册的channelHandler 会形成双向链表
     private void addLast0(AbstractChannelHandlerContext newCtx) {
         AbstractChannelHandlerContext prev = tail.prev;
         newCtx.prev = prev;

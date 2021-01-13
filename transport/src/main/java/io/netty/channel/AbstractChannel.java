@@ -72,6 +72,7 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
         this.parent = parent;
         id = newId();
         unsafe = newUnsafe();
+        //newChannel，使用反射创建的是NioServerSocketChannel。构造器依次向上调用。实现pipeline的初始化
         pipeline = newChannelPipeline();
     }
 
@@ -137,6 +138,7 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
 
     @Override
     public ChannelPipeline pipeline() {
+        //服务端调用bind方法时，访问
         return pipeline;
     }
 
