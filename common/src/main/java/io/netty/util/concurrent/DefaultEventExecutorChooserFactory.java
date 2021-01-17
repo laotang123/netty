@@ -70,6 +70,8 @@ public final class DefaultEventExecutorChooserFactory implements EventExecutorCh
 
         @Override
         public EventExecutor next() {
+            //递增，取模，不可能是负数。适合executors数量不是2的幂次方。这里也就是EventLoopGroup的线程数
+            //根据线程池的数量是否为2的幂次方，产生两种选择方式
             return executors[(int) Math.abs(idx.getAndIncrement() % executors.length)];
         }
     }
