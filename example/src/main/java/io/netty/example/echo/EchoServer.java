@@ -49,28 +49,29 @@ public final class EchoServer {
         }
 
         // Configure the server. NioEventLoopGroup里面的children存放的是NioExecutor数组，NioExecutor是NioEventLoop的上层接口
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        // NioEventLoop-> nThreads NioEventLoop -> nThreads selector
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1); //初始化对象实现了nThreads个NioEventLoop，每一个NioEventLoop对应一个selector，初始化对象已经完成
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         final EchoServerHandler serverHandler = new EchoServerHandler();
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
-             .channel(NioServerSocketChannel.class)
-             .option(ChannelOption.SO_BACKLOG, 100)
-             .handler(new LoggingHandler(LogLevel.INFO))
-             .childHandler(new ChannelInitializer<SocketChannel>() {
-                 @Override
-                 public void initChannel(SocketChannel ch) throws Exception {
-                     ChannelPipeline p = ch.pipeline();
-                     if (sslCtx != null) {
-                         p.addLast(sslCtx.newHandler(ch.alloc()));
-                     }
-                     //p.addLast(new LoggingHandler(LogLevel.INFO));
-                     p.addLast(serverHandler);
-                 }
-             });
+                    .channel(NioServerSocketChannel.class) //初始化了一个反射工厂， class类型为NioServerSocketChannel.class
+                    .option(ChannelOption.SO_BACKLOG, 100)
+                    .handler(new LoggingHandler(LogLevel.INFO))
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        public void initChannel(SocketChannel ch) throws Exception {
+                            ChannelPipeline p = ch.pipeline();
+                            if (sslCtx != null) {
+                                p.addLast(sslCtx.newHandler(ch.alloc()));
+                            }
+                            //p.addLast(new LoggingHandler(LogLevel.INFO));
+                            p.addLast(serverHandler);
+                        }
+                    });
 
-            // Start the server.
+            // Start the server. 从NioEventLoopGroup中通过选择策略，选择出一个NioEventLoop与 NioServerSocketChannel进行绑定。
             ChannelFuture f = b.bind(PORT).sync();
 
             // Wait until the server socket is closed.
