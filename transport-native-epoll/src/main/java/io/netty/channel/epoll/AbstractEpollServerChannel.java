@@ -129,7 +129,7 @@ public abstract class AbstractEpollServerChannel extends AbstractEpollChannel im
                 if (exception != null) {
                     pipeline.fireExceptionCaught(exception);
                 }
-            } finally {
+            } finally {//LJFNOTE: LT模式，事件触发一次。如果数据没有读完，自己手动触发
                 epollInFinally(config);
             }
         }

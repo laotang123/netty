@@ -48,8 +48,8 @@ public final class EchoServer {
             sslCtx = null;
         }
 
-        // Configure the server. NioEventLoopGroup里面的children存放的是NioExecutor数组，NioExecutor是NioEventLoop的上层接口
-        // NioEventLoop-> nThreads NioEventLoop -> nThreads selector
+        // LJFNOTE:Configure the server. NioEventLoopGroup里面的children存放的是NioExecutor数组，NioExecutor是NioEventLoop的上层接口
+        // LJFNOTE:NioEventLoop-> nThreads NioEventLoop -> nThreads selector
         EventLoopGroup bossGroup = new NioEventLoopGroup(1); //初始化对象实现了nThreads个NioEventLoop，每一个NioEventLoop对应一个selector，初始化对象已经完成
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         final EchoServerHandler serverHandler = new EchoServerHandler();

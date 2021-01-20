@@ -69,6 +69,7 @@ public class NioEventLoopGroup extends MultithreadEventLoopGroup {
     }
 
     public NioEventLoopGroup(int nThreads, Executor executor) {
+        //LJFNOTE:默认selector,最终实现类似：https://github.com/frohoff/jdk8u-jdk/blob/master/src/macosx/classes/sun/nio/ch/DefaultSelectorProvider.java
         this(nThreads, executor, SelectorProvider.provider());
     }
 
