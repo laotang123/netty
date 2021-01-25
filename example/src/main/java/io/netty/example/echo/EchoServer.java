@@ -50,7 +50,10 @@ public final class EchoServer {
 
         // Configure the server. NioEventLoopGroup里面的children存放的是NioExecutor数组，NioExecutor是NioEventLoop的上层接口
         // NioEventLoop-> nThreads NioEventLoop -> nThreads selector
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1); //初始化对象实现了nThreads个NioEventLoop，每一个NioEventLoop对应一个selector，初始化对象已经完成
+        //初始化对象实现了nThreads个NioEventLoop，
+        // 每一个NioEventLoop对应一个selector，初始化对象已经完成
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         final EchoServerHandler serverHandler = new EchoServerHandler();
         try {

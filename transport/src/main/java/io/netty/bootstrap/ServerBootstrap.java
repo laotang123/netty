@@ -127,6 +127,7 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
         return this;
     }
 
+    //channel在server端是NioServerSocketChannel
     @Override
     void init(Channel channel) {
         setChannelOptions(channel, newOptionsArray(), logger);
