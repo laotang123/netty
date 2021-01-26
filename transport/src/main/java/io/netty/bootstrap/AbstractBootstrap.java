@@ -304,6 +304,12 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C>, C ext
         }
     }
 
+    /*
+     *initAndRegister分三步
+     * 1.创建一个ServerSocketChannel
+     * 2.初始化ServerSocketChannel
+     * 3.将ServerSocketChannel注册到NioEventLoop中的selector中
+     */
     final ChannelFuture initAndRegister() {
         Channel channel = null;
         try {
