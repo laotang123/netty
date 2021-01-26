@@ -466,10 +466,11 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
 
             AbstractChannel.this.eventLoop = eventLoop;
 
+            //判断当前运行线程是否为eventLoop里的线程
             if (eventLoop.inEventLoop()) {
                 register0(promise);
             } else {
-                try {
+                try {//NioEventLoop创建一个register线程任务
                     eventLoop.execute(new Runnable() {
                         @Override
                         public void run() {
@@ -495,6 +496,8 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
                     return;
                 }
                 boolean firstRegistration = neverRegistered;
+                //selectionKey = javaChannel().register(eventLoop().unwrappedSelector(), 0, this);
+                //注册一个ops为0的事件
                 doRegister();
                 neverRegistered = false;
                 registered = true;

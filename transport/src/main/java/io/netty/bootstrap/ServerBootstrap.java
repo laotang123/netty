@@ -128,6 +128,7 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
     }
 
     //channel在server端是NioServerSocketChannel
+    //init方法，配置一些参数和属性。将serverBootStrap中的handler尾插法到NioServerSocketChannel的pipeline中
     @Override
     void init(Channel channel) {
         setChannelOptions(channel, newOptionsArray(), logger);
@@ -138,8 +139,9 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
         final EventLoopGroup currentChildGroup = childGroup;
         final ChannelHandler currentChildHandler = childHandler;
         final Entry<ChannelOption<?>, Object>[] currentChildOptions;
+        //锁粒度细化，childOptions是LinkedHashMap，插入顺序重要
         synchronized (childOptions) {
-            currentChildOptions = childOptions.entrySet().toArray(EMPTY_OPTION_ARRAY);
+            currentChildOptions = childOptions.entrySet().toArray(EMPTY_OPTION_ARRAY);//toArray 会拷贝一份出来
         }
         final Entry<AttributeKey<?>, Object>[] currentChildAttrs = childAttrs.entrySet().toArray(EMPTY_ATTRIBUTE_ARRAY);
 

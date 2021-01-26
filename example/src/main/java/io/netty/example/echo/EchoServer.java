@@ -75,6 +75,7 @@ public final class EchoServer {
                     });
 
             // Start the server. 从NioEventLoopGroup中通过选择策略，选择出一个NioEventLoop与 NioServerSocketChannel进行绑定。
+            // TODO：bind到底做了哪些事情，画图+笔记+对比nio连接过程。添加自定义日志 定位代码位置
             ChannelFuture f = b.bind(PORT).sync();
 
             // Wait until the server socket is closed.
