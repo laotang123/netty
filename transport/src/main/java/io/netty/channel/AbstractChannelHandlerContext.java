@@ -354,6 +354,7 @@ abstract class AbstractChannelHandlerContext implements ChannelHandlerContext, R
 
     @Override
     public ChannelHandlerContext fireChannelRead(final Object msg) {
+        //read数据时，要找到实现InBound的handler
         invokeChannelRead(findContextInbound(MASK_CHANNEL_READ), msg);
         return this;
     }

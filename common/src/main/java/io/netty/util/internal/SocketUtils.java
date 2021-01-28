@@ -116,6 +116,7 @@ public final class SocketUtils {
             return AccessController.doPrivileged(new PrivilegedExceptionAction<SocketChannel>() {
                 @Override
                 public SocketChannel run() throws IOException {
+                    //selector轮询到OP_ACCEPT事件，最终调用jdk的selector。非阻塞模式下，如果没有连接请求。返回null
                     return serverSocketChannel.accept();
                 }
             });
