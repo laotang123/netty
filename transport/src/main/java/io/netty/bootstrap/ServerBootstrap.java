@@ -214,11 +214,11 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
             final Channel child = (Channel) msg;
 
             child.pipeline().addLast(childHandler);
-
+            //初始化创建好的socketChannel
             setChannelOptions(child, childOptions, logger);
             setAttributes(child, childAttrs);
 
-            try {
+            try {//从worker group中选择一个NioEventLoop，然后将socketChannel注册到它的selector
                 childGroup.register(child).addListener(new ChannelFutureListener() {
                     @Override
                     public void operationComplete(ChannelFuture future) throws Exception {
