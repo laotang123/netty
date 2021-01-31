@@ -94,8 +94,8 @@ public class DefaultChannelPipeline implements ChannelPipeline {
         succeededFuture = new SucceededChannelFuture(channel, null);
         voidPromise =  new VoidChannelPromise(channel, true);
 
-        tail = new TailContext(this);
-        head = new HeadContext(this);
+        tail = new TailContext(this);//是一个InBoundHandler
+        head = new HeadContext(this);//既是一个InBoundHandler，又是一个OutBoundHandler
 
         head.next = tail;
         tail.prev = head;
@@ -200,7 +200,7 @@ public class DefaultChannelPipeline implements ChannelPipeline {
         final AbstractChannelHandlerContext newCtx;
         synchronized (this) {
             checkMultiplicity(handler);
-
+            //handler 是ChannelInitializer，初始化nioServerSocketChannel
             newCtx = newContext(group, filterName(name, handler), handler);
 
             addLast0(newCtx);

@@ -354,10 +354,15 @@ abstract class AbstractChannelHandlerContext implements ChannelHandlerContext, R
 
     @Override
     public ChannelHandlerContext fireChannelRead(final Object msg) {
-        invokeChannelRead(findContextInbound(MASK_CHANNEL_READ), msg);
+        invokeChannelRead(findContextInbound(MASK_CHANNEL_READ), msg);//读的时候只需要InBoundHandler
         return this;
     }
 
+    /**
+     *
+     * @param next : 双链表中的head
+     * @param msg：刚读入时是socketChannel
+     */
     static void invokeChannelRead(final AbstractChannelHandlerContext next, Object msg) {
         final Object m = next.pipeline.touch(ObjectUtil.checkNotNull(msg, "msg"), next);
         EventExecutor executor = next.executor();

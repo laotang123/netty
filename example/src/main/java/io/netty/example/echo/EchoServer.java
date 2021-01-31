@@ -54,9 +54,10 @@ public final class EchoServer {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         final EchoServerHandler serverHandler = new EchoServerHandler();
         try {
+            //同一个连接客户端一个pipeline，服务端一个pipeline
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
-                    .channel(NioServerSocketChannel.class) //初始化了一个反射工厂， class类型为NioServerSocketChannel.class
+                    .channel(NioServerSocketChannel.class) //初始化了一个反射工厂， class类型为NioServerSocketChannel.class。无参构造器
                     .option(ChannelOption.SO_BACKLOG, 100)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
