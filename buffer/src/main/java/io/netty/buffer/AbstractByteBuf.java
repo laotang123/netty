@@ -1314,6 +1314,7 @@ public abstract class AbstractByteBuf extends ByteBuf {
     public int forEachByte(ByteProcessor processor) {
         ensureAccessible();
         try {
+            //遍历字节数组，只需要一次检查边界和访问权限。
             return forEachByteAsc0(readerIndex, writerIndex, processor);
         } catch (Exception e) {
             PlatformDependent.throwException(e);
@@ -1333,6 +1334,7 @@ public abstract class AbstractByteBuf extends ByteBuf {
     }
 
     int forEachByteAsc0(int start, int end, ByteProcessor processor) throws Exception {
+        //process方法返回false 则退出循环。返回当前遍历的cursor
         for (; start < end; ++start) {
             if (!processor.process(_getByte(start))) {
                 return start;

@@ -16,6 +16,8 @@
 package io.netty.example.echo;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.CompositeByteBuf;
+import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
