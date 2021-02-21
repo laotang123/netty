@@ -15,19 +15,20 @@ import java.util.Arrays;
  */
 public class UnPooledByteBufStudy {
     public static void main(String[] args) {
-        ByteBuf buffer = Unpooled.buffer(10);
-        System.out.println(buffer);
+//        ByteBuf buffer = Unpooled.buffer(10);
+//        System.out.println(buffer);
+//
+//        System.out.println(buffer.hasArray());
+//        buffer.writeInt(10);
+//        int length = buffer.readableBytes();
+//        System.out.println("length: " + length);
+//
+//        System.out.println(length);
+//        System.out.println();
 
-        System.out.println(buffer.hasArray());
-        buffer.writeInt(10);
-        int length = buffer.readableBytes();
-        System.out.println("length: " + length);
-
-        System.out.println(length);
-        System.out.println();
-
-
-
+        PooledByteBufAllocator pooledByteBufAllocator = new PooledByteBufAllocator();
+        ByteBuf byteBuf = pooledByteBufAllocator.directBuffer();
+        byteBuf.clear();
 
 
     }

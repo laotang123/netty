@@ -546,6 +546,7 @@ public class UnpooledHeapByteBuf extends AbstractReferenceCountedByteBuf {
     @Override
     protected void deallocate() {
         freeArray(array);
+        //将内部数组赋值为空，帮助GC。解除引用占用
         array = EmptyArrays.EMPTY_BYTES;
     }
 
